@@ -36,28 +36,37 @@
 &qupv3_se3_i2c {
 	qcom,clk-freq-out = <1000000>;
 	status = "ok";
-	/* AWINIC AW8697 Haptic */
-	aw8697_haptic@5A {
-		compatible = "awinic,aw8697_haptic";
+	/* AWINIC AW86927 Haptic, motor values as stock (device id 809) */
+	haptic_hv@5A {
+		compatible = "awinic,haptic_hv";
 		reg = <0x5A>;
 		reset-gpio = <&tlmm 147 0>;
 		irq-gpio = <&tlmm 145 0>;
 		status = "ok";
-		qcom,device_id = <809>; /* 809 */
-		/* haptic ic : aw86927 */
-		oplus,aw86927_boost_voltage = <88>; /* 0x50 */
-		haptic_hv_vmax = /bits/ 8 < 0x28 0x28 0x28 0x28 0x28 0x2C 0x30 0x34 0x38 0x3C 0x40 0x44 0x48 0x4C 0x50 0x54 0x58 >;
-		haptic_hv_gain = /bits/ 8 < 0x49 0x51 0x5A 0x62 0x6B 0x73 0x7C 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 >;
-
 		pinctrl-names = "default";
 		pinctrl-0 = <&aw_irq_gpio_default>;
-		oplus,livetap_support;
-		oplus,auto_break_mode_support;
-		oplus,d2s_gain = /bits/ 8 <0x6>;
-		oplus,brk_time = /bits/ 8 <0x6>;
-		oplus,brk_gain = /bits/ 8 <0x8>;
+		f0_pre = <1700>;
+		mode = /bits/ 8 <5>;
+
+		aw8692x_gain_bypass = /bits/ 8 <1>;
+		aw8692x_f0_cali_percent = /bits/ 8 <7>;
+		aw8692x_cont_drv1_lvl = /bits/ 8 <0x7F>;
+		aw8692x_cont_lra_vrms = <1000>;
+		aw8692x_cont_drv1_time = /bits/ 8 <0x04>;
+		aw8692x_cont_drv2_time = /bits/ 8 <0x06>;
+		aw8692x_cont_brk_time = /bits/ 8 <0x06>;
+		aw8692x_cont_track_margin = /bits/ 8 <0x0C>;
+		aw8692x_cont_brk_gain = /bits/ 8 <0x08>;
+		aw8692x_d2s_gain = /bits/ 8 <0x06>;
+		aw8692x_duration_time = /bits/ 8 <20 30 60>;
+		aw8692x_trig_config = /bits/ 8 <0 0 0 1 0 2 0 0
+						0 0 0 1 0 2 0 0
+						0 0 0 1 0 2 0 0>;
+		/* Boost register 0x58 */
+		aw8692x_bst_vol_default = <9000>;
+		aw8692x_is_enabled_track_en;
 	};
-	/* AWINIC AW8697 Haptic End */
+	/* AWINIC AW86927 Haptic End */
 // SIH6887 Haptic
 	sih_haptic_688x@6B {
 		compatible = "silicon,sih_haptic_688X";
